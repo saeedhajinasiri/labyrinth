@@ -18,6 +18,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         return {
           ...config.get('database'),
           entities: ['dist/**/*.entity{.ts,.js}'],
+          migrations: ['dist/**/migrations/*{.ts,.js}'],
+          migrationsTableName: 'migrations',
+          migrationsRun: true,
+          seeds: ['dist/**/seeds/*.seeder.{js,ts}'],
           synchronize: false,
         };
       },
