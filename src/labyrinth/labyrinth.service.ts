@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { CreateLabyrinthDto } from './dto/create-labyrinth.dto';
 
 @Injectable()
 export class LabyrinthService {
   findAll() {
-    return `This action return all the labyrinth for the current user. ${process.env.MAIN_TYPE_DATABASE}`;
+    return `This action return all the labyrinth for the current user.`;
   }
 
   findOne(id: number) {
     return `This action Return a specific labyrinth of the user by #${id}.`;
   }
 
-  create(createLabyrinthDto: CreateLabyrinthDto) {
+  create() {
     return 'This action Create an empty labyrinth and returns the labyrinth id.';
   }
 

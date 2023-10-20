@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Body, Put, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { LabyrinthService } from './labyrinth.service';
-import { CreateLabyrinthDto } from './dto/create-labyrinth.dto';
 
 @Controller('labyrinth')
 export class LabyrinthController {
@@ -26,12 +25,10 @@ export class LabyrinthController {
 
   /**
    * Create an empty labyrinth and returns the labyrinth id.
-   *
-   * @param createLabyrinthDto
    */
   @Post()
-  create(@Body() createLabyrinthDto: CreateLabyrinthDto) {
-    return this.labyrinthService.create(createLabyrinthDto);
+  create() {
+    return this.labyrinthService.create();
   }
 
   /**
