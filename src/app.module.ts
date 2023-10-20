@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LabyrinthModule } from './labyrinth/labyrinth.module';
 import configuration from './config/config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LabyrinthModule } from './labyrinths/labyrinth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     LabyrinthModule,
+    UsersModule,
     ConfigModule.forRoot({
       load: [configuration],
     }),

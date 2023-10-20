@@ -1,12 +1,15 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export class CreateLabyrinthBlocksTable1697810807293
-  implements MigrationInterface
-{
+export class CreateLabyrinthsTable1697810803831 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'labyrinth_blocks',
+        name: 'labyrinths',
         columns: [
           {
             name: 'id',
@@ -16,28 +19,23 @@ export class CreateLabyrinthBlocksTable1697810807293
             generationStrategy: 'increment',
           },
           {
-            name: 'labyrinth_id',
+            name: 'user_id',
             type: 'int4',
             isNullable: false,
           },
           {
             name: 'x',
             type: 'int4',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'y',
             type: 'int4',
-            isNullable: false,
-          },
-          {
-            name: 'type',
-            type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'created_at',
-            type: 'date',
+            type: 'datetime',
             isNullable: true,
           },
         ],
@@ -47,15 +45,15 @@ export class CreateLabyrinthBlocksTable1697810807293
     );
 
     const foreignKey = new TableForeignKey({
-      columnNames: ['labyrinth_id'],
+      columnNames: ['user_id'],
       referencedColumnNames: ['id'],
-      referencedTableName: 'labyrinths',
+      referencedTableName: 'users',
       onDelete: 'CASCADE',
     });
-    await queryRunner.createForeignKey('labyrinth_blocks', foreignKey);
+    await queryRunner.createForeignKey('labyrinths', foreignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.query(`DROP TABLE labyrinth_blocks`);
+    queryRunner.query(`DROP TABLE labyrinths`);
   }
 }
