@@ -21,6 +21,7 @@ export class CreateUsersTable1697810765749 implements MigrationInterface {
           {
             name: 'username',
             type: 'varchar',
+            isUnique: true,
             isNullable: false,
           },
           {
@@ -30,7 +31,7 @@ export class CreateUsersTable1697810765749 implements MigrationInterface {
           },
           {
             name: 'created_at',
-            type: 'date',
+            type: 'datetime',
             isNullable: true,
           },
         ],
