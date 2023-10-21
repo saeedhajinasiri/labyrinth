@@ -45,6 +45,7 @@ export class CreateLabyrinthsTable1697810803831 implements MigrationInterface {
     );
 
     const foreignKey = new TableForeignKey({
+      name: 'labyrinths_user_id_foreign',
       columnNames: ['user_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'users',
