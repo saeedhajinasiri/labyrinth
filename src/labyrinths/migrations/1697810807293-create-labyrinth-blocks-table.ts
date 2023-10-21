@@ -48,6 +48,7 @@ export class CreateLabyrinthBlocksTable1697810807293
     );
 
     const foreignKey = new TableForeignKey({
+      name: 'labyrinth_blocks_labyrinth_id_foreign',
       columnNames: ['labyrinth_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'labyrinths',
