@@ -4,13 +4,15 @@ import { AppService } from './app.service';
 import configuration from './config/config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LabyrinthModule } from './labyrinths/labyrinth.module';
+import { LabyrinthsModule } from './labyrinths/labyrinths.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { LabyrinthBlocksModule } from './labyrinths/labyrinth-blocks.module';
 
 @Module({
   imports: [
-    LabyrinthModule,
+    LabyrinthsModule,
+    LabyrinthBlocksModule,
     UsersModule,
     AuthModule,
     ConfigModule.forRoot({

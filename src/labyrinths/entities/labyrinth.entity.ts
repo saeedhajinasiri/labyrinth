@@ -5,8 +5,8 @@ export enum blockType {
   'FIELD' = 'field',
 }
 
-@Entity()
-export class Labyrinths {
+@Entity({ name: 'labyrinths' })
+export class Labyrinth {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -19,12 +19,12 @@ export class Labyrinths {
   @Column({ nullable: true })
   y: number;
 
-  @Column('date')
+  @Column('datetime')
   created_at: Date;
 }
 
-@Entity()
-export class LabyrinthBlocks {
+@Entity({ name: 'labyrinth_blocks' })
+export class LabyrinthBlock {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -40,6 +40,6 @@ export class LabyrinthBlocks {
   @Column({ nullable: true })
   y: number;
 
-  @Column('date')
+  @Column('datetime')
   created_at: Date;
 }

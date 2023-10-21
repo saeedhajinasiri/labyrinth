@@ -7,13 +7,14 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { LabyrinthService } from './labyrinth.service';
+import { LabyrinthsService } from './labyrinths.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../users/entities/user.entity';
+import { blockType } from './entities/labyrinth.entity';
 
 @Controller('labyrinth')
-export class LabyrinthController {
-  constructor(private readonly labyrinthService: LabyrinthService) {}
+export class LabyrinthsController {
+  constructor(private readonly labyrinthService: LabyrinthsService) {}
 
   /**
    * Return all the labyrinth for the current user.
@@ -34,7 +35,7 @@ export class LabyrinthController {
    */
   @Get(':id')
   @UseGuards(AuthGuard('basic'))
-  findOne(@Req() req: { user: User }, @Param('id') id: string) {
+  async findOne(@Req() req: { user: User }, @Param('id') id: string) {
     return this.labyrinthService.findOne(+id, req.user.id);
   }
 
@@ -65,9 +66,9 @@ export class LabyrinthController {
     @Param('id') id: string,
     @Param('x') x: string,
     @Param('y') y: string,
-    @Param('type') type: 'empty' | 'filled',
+    @Param('type') type: blockType,
   ) {
-    return this.labyrinthService.defineBlockType(
+    return this.labyrinthService.createBlockType(
       +id,
       +x,
       +y,
@@ -92,7 +93,7 @@ export class LabyrinthController {
     @Param('x') x: string,
     @Param('y') y: string,
   ) {
-    return this.labyrinthService.defineStartBlock(+id, +x, +y, req.user.id);
+    return this.labyrinthService.createStartBlock(+id, +x, +y, req.user.id);
   }
 
   /**
@@ -111,7 +112,7 @@ export class LabyrinthController {
     @Param('x') x: string,
     @Param('y') y: string,
   ) {
-    return this.labyrinthService.defineEndBlock(+id, +x, +y, req.user.id);
+    return this.labyrinthService.createEndBlock(+id, +x, +y, req.user.id);
   }
 
   /**
