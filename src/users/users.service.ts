@@ -3,13 +3,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { encryptPassword } from '../utils/encrypt-password';
+import { passwordHelper } from '../utils/password-helper';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
   ) {}
 
   /**
@@ -20,7 +20,7 @@ export class UsersService {
     return this.userRepository.save({
       full_name: createUserDto.full_name,
       username: createUserDto.username,
-      password: await encryptPassword(createUserDto.password),
+      password: await passwordHelper(createUserDto.password),
       created_at: new Date().toJSON(),
     });
   }
@@ -32,6 +32,16 @@ export class UsersService {
   async findOne(id: number): Promise<User | null> {
     return this.userRepository.findOneBy({
       id: id,
+    });
+  }
+
+  /**
+   * Find a specific user by username
+   * @param username
+   */
+  async findByUsername(username: string): Promise<User | null> {
+    return this.userRepository.findOneBy({
+      username: username,
     });
   }
 }
