@@ -93,7 +93,7 @@ export class LabyrinthsController {
     @Param('x') x: string,
     @Param('y') y: string,
   ) {
-    return this.labyrinthService.createStartBlock(+id, +x, +y, req.user.id);
+    return this.labyrinthService.updateStartBlock(+id, +x, +y, req.user.id);
   }
 
   /**
@@ -112,7 +112,7 @@ export class LabyrinthsController {
     @Param('x') x: string,
     @Param('y') y: string,
   ) {
-    return this.labyrinthService.createEndBlock(+id, +x, +y, req.user.id);
+    return this.labyrinthService.updateEndBlock(+id, +x, +y, req.user.id);
   }
 
   /**

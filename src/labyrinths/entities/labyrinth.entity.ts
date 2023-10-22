@@ -19,6 +19,18 @@ export class Labyrinth {
   @Column({ nullable: true })
   y: number;
 
+  @Column({ nullable: true })
+  start_x: number;
+
+  @Column({ nullable: true })
+  start_y: number;
+
+  @Column({ nullable: true })
+  end_x: number;
+
+  @Column({ nullable: true })
+  end_y: number;
+
   @Column('datetime')
   created_at: Date;
 }

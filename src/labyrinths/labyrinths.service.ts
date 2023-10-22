@@ -79,12 +79,38 @@ export class LabyrinthsService {
     return await this.labyrinthBlocksService.create(id, x, y, type);
   }
 
-  createStartBlock(id: number, x: number, y: number, userId: number) {
-    return `This action set the starting block of the labyrinth #${id} using userId #${userId} and #${x}/#${y} coordinates`;
+  async updateStartBlock(id: number, x: number, y: number, userId: number) {
+    const labyrinth = await this.findOne(id, userId);
+
+    if (labyrinth?.end_x === x && labyrinth.end_y === y) {
+      throw new PreconditionFailedException();
+    }
+    return await this.labyrinthRepository.update(
+      {
+        id: id,
+      },
+      {
+        start_x: x,
+        start_y: y,
+      },
+    );
   }
 
-  createEndBlock(id: number, x: number, y: number, userId: number) {
-    return `This action set the ending block of the labyrinth #${id} using userId #${userId} and #${x}/#${y} coordinates`;
+  async updateEndBlock(id: number, x: number, y: number, userId: number) {
+    const labyrinth = await this.findOne(id, userId);
+    if (labyrinth?.start_x === x && labyrinth.start_y === y) {
+      throw new PreconditionFailedException();
+    }
+
+    return this.labyrinthRepository.update(
+      {
+        id: id,
+      },
+      {
+        end_x: x,
+        end_y: y,
+      },
+    );
   }
 
   solution(id: number, userId: number) {
