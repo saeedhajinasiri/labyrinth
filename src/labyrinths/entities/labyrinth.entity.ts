@@ -5,6 +5,11 @@ export enum blockType {
   'FIELD' = 'field',
 }
 
+export interface Node {
+  x: number;
+  y: number;
+}
+
 @Entity({ name: 'labyrinths' })
 export class Labyrinth {
   @PrimaryGeneratedColumn()

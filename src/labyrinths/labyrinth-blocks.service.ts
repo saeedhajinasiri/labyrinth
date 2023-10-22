@@ -11,6 +11,16 @@ export class LabyrinthBlocksService {
   ) {}
 
   /**
+   * find all labyrinth-blocks of specific labyrinth
+   * @param labyrinthId
+   */
+  async findAll(labyrinthId: number): Promise<LabyrinthBlock[]> {
+    return this.labyrinthBlockRepository.findBy({
+      labyrinth_id: labyrinthId,
+    });
+  }
+
+  /**
    * Find a specific labyrinth of user
    * @param labyrinthId
    * @param x

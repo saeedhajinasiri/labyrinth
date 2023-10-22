@@ -11,6 +11,7 @@ import {
 } from './entities/labyrinth.entity';
 import { Repository } from 'typeorm';
 import { LabyrinthBlocksService } from './labyrinth-blocks.service';
+import { SolutionService } from './solution.service';
 
 @Injectable()
 export class LabyrinthsService {
@@ -35,7 +36,10 @@ export class LabyrinthsService {
    * @param id
    * @param userId
    */
-  async findOne(id: number, userId: number): Promise<Labyrinth | null> {
+  async findOne(
+    id: number,
+    userId: number,
+  ): Promise<(Labyrinth & { blocks: LabyrinthBlock[] }) | null> {
     const labyrinth = await this.labyrinthRepository.findOneBy({
       id: id,
       user_id: userId,
@@ -44,7 +48,10 @@ export class LabyrinthsService {
       throw new NotFoundException('Labyrinth not found');
     }
 
-    return labyrinth;
+    const labyrinthBlocks = await this.labyrinthBlocksService.findAll(id);
+    return Object.assign({}, labyrinth, {
+      blocks: labyrinthBlocks,
+    });
   }
 
   /**
@@ -58,6 +65,14 @@ export class LabyrinthsService {
     });
   }
 
+  /**
+   * Create a block
+   * @param id
+   * @param x
+   * @param y
+   * @param type
+   * @param userId
+   */
   async createBlockType(
     id: number,
     x: number,
@@ -79,6 +94,13 @@ export class LabyrinthsService {
     return await this.labyrinthBlocksService.create(id, x, y, type);
   }
 
+  /**
+   * define start block
+   * @param id
+   * @param x
+   * @param y
+   * @param userId
+   */
   async updateStartBlock(id: number, x: number, y: number, userId: number) {
     const labyrinth = await this.findOne(id, userId);
 
@@ -96,6 +118,13 @@ export class LabyrinthsService {
     );
   }
 
+  /**
+   * define end block
+   * @param id
+   * @param x
+   * @param y
+   * @param userId
+   */
   async updateEndBlock(id: number, x: number, y: number, userId: number) {
     const labyrinth = await this.findOne(id, userId);
     if (labyrinth?.start_x === x && labyrinth.start_y === y) {
@@ -113,7 +142,27 @@ export class LabyrinthsService {
     );
   }
 
-  solution(id: number, userId: number) {
+  /**
+   * find the solution
+   * @param id
+   * @param userId
+   */
+  async solution(id: number, userId: number) {
+    const labyrinth = await this.findOne(id, userId);
+
+    if (labyrinth) {
+      const firstNode: { x: number; y: number } = {
+        x: labyrinth.start_x,
+        y: labyrinth.start_y,
+      };
+      const endNode = { x: labyrinth?.end_x, y: labyrinth?.end_y };
+      const solution = new SolutionService(
+        firstNode,
+        endNode,
+        labyrinth.blocks,
+      );
+      return solution.findSolution();
+    }
     return `This action return the solution for the labyrinth #${id} userId #${userId} and`;
   }
 }
