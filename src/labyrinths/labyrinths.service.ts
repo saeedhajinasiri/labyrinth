@@ -163,6 +163,5 @@ export class LabyrinthsService {
       );
       return solution.findSolution();
     }
-    return `This action return the solution for the labyrinth #${id} userId #${userId} and`;
   }
 }
