@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Node, LabyrinthBlock } from './entities/labyrinth.entity';
 @Injectable()
 export class SolutionService {
-  private firstNode: Node;
-  private lastNode: Node;
-  private blocks: LabyrinthBlock[];
+  private readonly firstNode: Node;
+  private readonly lastNode: Node;
+  private readonly blocks: LabyrinthBlock[];
   private visited: any = {};
   private moves: any[] = [];
 
@@ -15,11 +15,23 @@ export class SolutionService {
     this._addVisited(firstNode);
   }
 
+  /**
+   * Get the moves if the labyrinth was solvable
+   */
   findSolution() {
-    this.recursiveBFS(this.firstNode);
-    return this.moves;
+    if (this.recursiveBFS(this.firstNode)) {
+      return this.moves;
+    }
+
+    return {
+      message: 'It Labyrinth does not have a solution',
+    };
   }
 
+  /**
+   * Find the end node with the BFS algorithm
+   * @param currentNode
+   */
   recursiveBFS(currentNode: Node): Node | false {
     if (
       currentNode.x === this.lastNode.x &&
@@ -46,6 +58,10 @@ export class SolutionService {
     return false;
   }
 
+  /**
+   * Get all the neighbor nodes which is not already visited
+   * @param currentNode
+   */
   nextNodes(currentNode: Node) {
     return this.blocks.filter((item: LabyrinthBlock) => {
       if (
@@ -62,23 +78,45 @@ export class SolutionService {
     });
   }
 
+  /**
+   * add a node to the visited object
+   * @param item
+   * @private
+   */
   private _addVisited(item: Node) {
     this.visited = Object.assign({}, this.visited, {
       [`${item.x},${item.y}`]: item,
     });
   }
 
+  /**
+   * add moves to the moves object
+   * @param fromNode
+   * @param toNode
+   * @private
+   */
   private _addMove(fromNode: Node, toNode: Node) {
-    if (fromNode.y === toNode.y) {
-      if (fromNode.x > toNode.x) {
-        return this.moves.unshift('left');
-      }
-      return this.moves.unshift('right');
-    }
+    return this.moves.unshift(this._detectMove(fromNode, toNode));
+  }
 
-    if (fromNode.y > toNode.y) {
-      return this.moves.unshift('up');
+  /**
+   * detect the moving between nodes
+   * @param fromNode
+   * @param toNode
+   * @private
+   */
+  private _detectMove(fromNode: Node, toNode: Node) {
+    switch (`${fromNode.x - toNode.x},${fromNode.y - toNode.y}`) {
+      case '1,0':
+        return 'left';
+      case '-1,0':
+        return 'right';
+      case '0,1':
+        return 'up';
+      case '0,-1':
+        return 'down';
+      default:
+        return 'there is no possible move between nodes';
     }
-    return this.moves.unshift('down');
   }
 }
