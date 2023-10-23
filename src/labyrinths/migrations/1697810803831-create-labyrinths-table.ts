@@ -24,12 +24,22 @@ export class CreateLabyrinthsTable1697810803831 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'x',
+            name: 'start_x',
             type: 'int4',
             isNullable: true,
           },
           {
-            name: 'y',
+            name: 'start_y',
+            type: 'int4',
+            isNullable: true,
+          },
+          {
+            name: 'end_x',
+            type: 'int4',
+            isNullable: true,
+          },
+          {
+            name: 'end_y',
             type: 'int4',
             isNullable: true,
           },
