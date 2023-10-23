@@ -19,12 +19,6 @@ export class Labyrinth {
   user_id: number;
 
   @Column({ nullable: true })
-  x: number;
-
-  @Column({ nullable: true })
-  y: number;
-
-  @Column({ nullable: true })
   start_x: number;
 
   @Column({ nullable: true })
