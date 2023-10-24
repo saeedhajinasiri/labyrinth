@@ -40,6 +40,7 @@ $ npm run test:cov
 
 ## Description
 
+### Framework
 1. I used the Nest framework to do this task for two reasons:\
 1.1. It's based on Typescript\
 1.2. My previous experience in it
@@ -49,3 +50,15 @@ $ npm run test:cov
 4. It solves the main problem of JavaScript -> Architecture. So it's easier for me to understand as a Laravel/PHP developer, because its architecture is based on MVC.
 5. It provides an out-of-the-box application architecture which allows developers and teams to create highly testable, scalable, loosely coupled, and easily maintainable application.
 6. It has its own CLI, it causes to install it easily and make `resources`, `controllers`, etc with it.
+
+### Database
+1. Actually I'm familiar with MySQL and before starting the task, according to an ERD I already drew, I drew it as a relational database, so I used MySQL.
+   <img src="public/ERD.png" alt="example">
+
+
+## How to use
+
+First of all, you have to create a user, then it's cardinal to create an empty labyrinth, after that you have to create all the labyrinth's blocks, after that, define the start and end block.
+
+## Example
+<img src="public/example.png" alt="example">
