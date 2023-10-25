@@ -60,5 +60,6 @@ $ npm run test:cov
 
 First of all, you have to create a user, then it's cardinal to create an empty labyrinth, after that you have to create all the labyrinth's blocks, after that, define the start and end block.
 
+Also you can import this <a href='./public/labyrinth_db.sql'>file</a> on your database to have below examples with a test user.
 ## Example
 <img src="public/example.png" alt="example">
