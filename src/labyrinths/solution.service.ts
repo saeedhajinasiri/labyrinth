@@ -19,7 +19,7 @@ export class SolutionService {
    * Get the moves if the labyrinth was solvable
    */
   findSolution() {
-    if (this.recursiveBFS(this.firstNode)) {
+    if (this.recursiveDFS(this.firstNode)) {
       return this.moves;
     }
 
@@ -29,10 +29,10 @@ export class SolutionService {
   }
 
   /**
-   * Find the end node with the BFS algorithm
+   * Find the end node with the DFS algorithm
    * @param currentNode
    */
-  recursiveBFS(currentNode: Node): Node | false {
+  recursiveDFS(currentNode: Node): Node | false {
     if (
       currentNode.x === this.lastNode.x &&
       currentNode.y === this.lastNode.y
@@ -48,7 +48,7 @@ export class SolutionService {
     while (nextNodes.length > 0) {
       const x = nextNodes[0];
       nextNodes.shift();
-      const result: Node | false = this.recursiveBFS(x);
+      const result: Node | false = this.recursiveDFS(x);
       if (result) {
         this._addMove(currentNode, result);
         return currentNode;
